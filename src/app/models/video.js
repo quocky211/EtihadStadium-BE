@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Video.init({
     name: DataTypes.STRING,
+    paramName: DataTypes.STRING,
     linkIFrame: DataTypes.STRING,
     timeDuration: DataTypes.STRING,
     thumbnail: DataTypes.STRING,

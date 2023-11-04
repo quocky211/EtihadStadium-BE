@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Tour.init({
     name: DataTypes.STRING,
+    paramName: DataTypes.STRING,
     price: DataTypes.DOUBLE,
     fromDate: DataTypes.DATE,
     toDate: DataTypes.DATE,

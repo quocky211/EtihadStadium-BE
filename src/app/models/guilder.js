@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Guilder.init({
     name: DataTypes.STRING,
+    paramName: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {

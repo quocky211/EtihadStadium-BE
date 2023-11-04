@@ -1,14 +1,16 @@
 'use strict';
+const bcrypt = require('bcrypt');
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-  //   static associate(models) {
-  //     User.hasMany(models.Store, { foreignKey: 'store_id' });
-  //     User.hasOne(models.Contract, { foreignKey: 'user_id' });
-  //     User.hasMany(models.JobRequest, { foreignKey: 'user_id' });
-  //   }
+    async isCheckPassword(password) {
+      try {
+        return await bcrypt.compare(password, this.password);
+      } catch (error) {
+      }
+    }
   }
   User.init({
     name: DataTypes.STRING,

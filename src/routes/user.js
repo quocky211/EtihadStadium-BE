@@ -7,8 +7,7 @@ router.post('/register', userController.Register);
 router.post('/refresh-token', userController.RefreshToken);
 router.post('/login', userController.Login);
 router.delete('/logout', userController.Logout);
-
-router.get('/:id', userController.GetUser);
+router.get('/', userController.getUser);
 router.patch('/:id', userController.EditUser);
 
 module.exports = router;

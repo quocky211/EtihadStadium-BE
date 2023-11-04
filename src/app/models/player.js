@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Player.init({
     name: DataTypes.STRING,
+    paramName: DataTypes.STRING,
     dateOfBirth: DataTypes.DATE,
     location: DataTypes.DATE,
     nationality: DataTypes.STRING,

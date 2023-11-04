@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
 const userValidate = (data) => {
-    const phoneRegex = /^(\+?84|0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-9]|9[0-4|6-9])([0-9]{7})$/;
     const userSchema = Joi.object({
         email: Joi.string()
             .email()
@@ -13,11 +12,8 @@ const userValidate = (data) => {
             .lowercase()
             .required(),
         password: Joi.string().min(6).max(30).required(),
-        gender: Joi.string(),
-        dateOfBirth: Joi.date(),
+        dateOfBirth: Joi.string(),
         name: Joi.string().min(3).max(30).required(),
-        level: Joi.bool().default(false),
-        phone: Joi.string().pattern(phoneRegex),
         confirmPassword: Joi.string().valid(Joi.ref('password')),
     });
 
