@@ -4,41 +4,41 @@ const { DataTypes } = require('sequelize');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Tours', {
+    await queryInterface.createTable('Tour_details', {
       id: {
         allowNull: false,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         type: Sequelize.UUID
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
+      tourId: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: 'Tours',
+          key: 'id'
+        }
       },
-      paramName: {
-        type: Sequelize.STRING,
-      },
-      price: {
-        type: Sequelize.DOUBLE
-      },
-      date: {
-        type: Sequelize.DATE
-      },
-      description: {
+      startAt: {
         type: Sequelize.STRING
+      },
+      endAt: {
+        type: Sequelize.STRING
+      },
+      remainTicket: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Tours');
+    await queryInterface.dropTable('Tour_details');
   }
 };
