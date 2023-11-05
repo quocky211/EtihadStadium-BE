@@ -3,15 +3,24 @@ const { v4: uuidv4} = require('uuid');
 const config = require('../config/config');
 const sequelize = new Sequelize(config.development)
 const httpError = require('http-errors');
-const { Tour, Tour_detail } = require('../models');
-
+const { Tour, Tour_detail, Tour_service, Service, Tour_guilder, Guider } = require('../models');
 class TourController {
     async getTours(req, res, next) {
         try {
             const { numberOfTicket, date} = req.query;
-            console.log(date);
             if (!numberOfTicket && !date) {
-                return res.json(await Tour.findAll({}));
+                return res.json(await Tour.findAll({ 
+                    include: [
+                        {
+                            model: Tour_service, as: 'tourService',
+                            include: [
+                                {
+                                    model: Service, as: 'service'
+                                }
+                            ]
+                        }
+                    ]
+                }));
             }
             
             const tours = await Tour.findAll({where: {
@@ -29,8 +38,17 @@ class TourController {
                             }
                         } : {})
                     }
+                },
+                {
+                    model: Tour_service, as: 'tourService',
+                    include: [
+                        {
+                            model: Service, as: 'service'
+                        }
+                    ]
                 }
-            ]})
+            ]});
+            console.log(tours);
             return res.json(tours);
         } catch (error) {
             console.error(error);
@@ -44,7 +62,24 @@ class TourController {
             return res.json(await Tour.findOne({
                 where: {
                     paramName
-                }
+                }, include: [
+                    {
+                        model: Tour_service, as: "tourService",
+                        include: [
+                            {
+                                model: Service, as: "service"
+                            }
+                        ]
+                    },
+                    {
+                        model: Tour_guilder, as: "tourGuilder",
+                        include: [
+                            {
+                                model: Guider, as: "guilder"
+                            }
+                        ]
+                    }
+                ]
             }));
 
         } catch (error) {
@@ -110,16 +145,36 @@ class TourController {
             next(error);
         }
     }
+    async addTourService(req, res, next) {
+        try {
+            const { paramName } = req.params;
+            const serviceId = req.body.serviceId;
+            const tour = await Tour.findOne({where: {
+                paramName,
+            }, attributes: ["id"]})
+            const formData = {
+                serviceId,
+                id: uuidv4(),
+                tourId: tour.id
+            }
+            await Tour_service.create(formData);
+            return res.json({
+                "message": "Add Service for Tour successfully"
+            });
+        } catch (error) {
+            console.error(error);
+            next(error);
+        }
+    }
     async editTour(req, res, error) {
         try {
             const { paramName } = req.params;
             const updateData = {
                 name: req.body?.name || "",
                 paramName: req.body?.paramName || "",
-                linkIFrame: req.body?.linkIFrame || "",
-                timeDuration: req.body?.timeDuration || "",
-                thumbnail: req.body?.thumbnail || "",
-                type: req.body?.type || "",
+                price: req.body?.price || "",
+                date: new Date(req.body?.date) || null,
+                description: req.body?.description || "",
             }
             await Tour.update(updateData, {
                 where: {
