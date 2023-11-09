@@ -8,8 +8,10 @@ router.get('/', tourController.getTours);
 
 
 // book tour
-router.post('/:paramName/chooseTime', tourController.getTicketByTour);
-
+router.get('/:paramName/chooseTime', tourController.getTicketByTour);
+// chon ticket xong chuyen sang giao dien chon loai khach hang: adult, student 
+// -> send params va tourDetailId va numberOfRemainTicket sang giao dien tiep theo
+router.post('/:paramName/chooseTicket', tourController.addTicketForCreateOrder)
 // // admin
 router.post('/:paramName/add-tour-service', tourController.addTourService);
 router.post('/:paramName/add-tour-detail', tourController.addTourDetail);

@@ -3,7 +3,7 @@ const { v4: uuidv4} = require('uuid');
 const config = require('../config/config');
 const sequelize = new Sequelize(config.development)
 const httpError = require('http-errors');
-const { Tour, Tour_detail, Tour_service, Service, Tour_guilder, Guider } = require('../models');
+const { Tour, Tour_detail, Tour_service, Service, Tour_guilder, Guider, Order } = require('../models');
 class TourController {
     async getTours(req, res, next) {
         try {
@@ -94,8 +94,7 @@ class TourController {
                     paramName
                 }
             });
-            console.log(tour);
-            return res.json(await Tour_detail.findOne({
+            return res.json(await Tour_detail.findAll({
                 where: {
                     tourId: tour.id
                 }
@@ -163,6 +162,19 @@ class TourController {
             });
         } catch (error) {
             console.error(error);
+            next(error);
+        }
+    }
+    async addTicketForCreateOrder(req, res, next) {
+        try {
+            const { tourParamName, tourDetailId } = req.body;
+            const formData = {
+                ticketQuantity: req.body.ticketQuantity,
+                isCheckout: false,
+                totalAmount
+            }
+            await Order.create()
+        } catch (error) {
             next(error);
         }
     }

@@ -6,6 +6,7 @@ const Tour_service = require('./tour_service');
 const Service = require('./service');
 const Tour_guilder = require('./tour_guilder');
 const Guider = require("./guilder");
+const Order = require("./order")
 const models = {
     Tour: Tour(sequelize, DataTypes),
     Tour_detail: Tour_detail(sequelize, DataTypes),
@@ -13,6 +14,7 @@ const models = {
     Service: Service(sequelize, DataTypes),
     Guider: Guider(sequelize, DataTypes),
     Tour_guilder: Tour_guilder(sequelize, DataTypes),
+    Order: Order(sequelize, DataTypes),
 }
 models.Tour.hasMany(models.Tour_detail, { foreignKey: 'tourId', as: "tickets"});
 models.Tour_detail.belongsTo(models.Tour, { foreignKey: 'tourId', as: "tour" });

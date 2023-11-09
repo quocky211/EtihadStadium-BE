@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   Ticket.init({
     orderId: DataTypes.UUID,
     code: DataTypes.STRING,
+    type: DataTypes.STRING,
     nameOfVisitor: DataTypes.STRING,
     isUsed: DataTypes.BOOLEAN,
     createdAt: DataTypes.DATE,

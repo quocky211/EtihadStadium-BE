@@ -22,6 +22,9 @@ module.exports = {
       code: {
         type: Sequelize.STRING
       },
+      type: {
+        type: Sequelize.STRING
+      },
       nameOfVisitor: {
         type: Sequelize.STRING
       },

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Tour_detail extends Model {
     static associate(models) {
       Tour_detail.belongsTo(models.Tour, { foreignKey: 'tourId', as: 'tourDetails' });
+      Tour_detail.hasMany(models.Order,{ foreignKey: 'tourDetailId' });
     }
   }
   Tour_detail.init({

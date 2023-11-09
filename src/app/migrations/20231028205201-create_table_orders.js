@@ -11,7 +11,7 @@ module.exports = {
         defaultValue: DataTypes.UUIDV4,
         type: Sequelize.UUID
       },
-      tourId: {
+      tourDetailId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
