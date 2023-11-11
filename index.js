@@ -35,10 +35,6 @@ sequelize
     })
 
 route(app);
-app.get('/', function (req, res)  {
-    res.send("hello");
-});
-
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log(`Example app listening on port ${process.env.PORT}`);
 });
