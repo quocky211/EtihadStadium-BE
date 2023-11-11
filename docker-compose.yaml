@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
@@ -24,6 +24,9 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
   node:
     container_name: node_server
     restart: always
@@ -39,6 +42,9 @@ services:
     depends_on: 
       - db
       - pg-admin
+    volumes:
+      - D:\Kỳ 7\Hệ thống thông tin địa lí 3 chiều\Project\EtihadStadium-BE:/usr/src
 
 volumes:
   postgres-data:
+  pgadmin-data:
