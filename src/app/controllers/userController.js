@@ -23,11 +23,14 @@ class UserController {
             });
 
             if (isExistEmail) throw httpError.Conflict(`${email} has been existed!!`);
+
+            const salt = await bcrypt.genSalt(10);
+            const hashed = await bcrypt.hash(req.body.password, salt);
             const formData = {
                 id: uuidv4(),
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password,
+                password: hashed,
                 dateOfBirth: new Date(req.body.dateOfBirth),
                 isVerify: true,
                 role: 'customer',
@@ -73,20 +76,29 @@ class UserController {
             if (error) {
                 throw httpError(error.details[0].message);
             }
-
-            const user = await User.findOne({ email: req.body.email });
+            const user = await User.findOne({
+                where: {
+                    email: req.body.email
+                }
+            });
+            console.log("==========", user.id);
             if (!user) {
                 throw httpError.NotFound(`${req.body.email} has not been registered!!`);
             }
 
-            const isValidPassword = await user.isCheckPassword(req.body.password);
+            const isValidPassword = await bcrypt.compareSync(
+                req.body.password,
+                user.password
+            );
+            console.log(isValidPassword);
             if (!isValidPassword) {
                 throw httpError.Unauthorized();
             }
 
-            const accessToken = await signAccessToken(user._id);
-            const refreshToken = await signRefreshToken(user._id);
-            res.json({
+            const accessToken = await signAccessToken(user.id);
+            const refreshToken = await signRefreshToken(user.id);
+            console.log(accessToken);
+            return res.json({
                 accessToken,
                 refreshToken,
                 user,
@@ -106,31 +118,6 @@ class UserController {
             next(error);
         }
     }
-    
-    // GetUser(req, res, next) {
-    //     const userId = req.params.id;
-    //     client.get(`user:${userId}`, (err, user) => {
-    //         if (err) throw err;
-    //         if (user) {
-    //             console.log('Lấy danh sách người dùng từ Redis');
-    //             res.json(JSON.parse(user));
-    //         } else {
-    //             User.find({ _id: userId }, 'email name gender address birthday phone')
-    //                 .exec()
-    //                 .then((user) => {
-    //                     if (!user) {
-    //                         console.log('Không tìm thấy người dùng');
-    //                     } else {
-    //                         client.setex(`user:${userId}`, 1800, JSON.stringify(user));
-    //                         res.json(user);
-    //                     }
-    //                 })
-    //                 .catch(next);
-    //         }
-    //     });
-    // }
-
-    // PATCH /user/:id
     async EditUser(req, res, next) {
         try {
             const { error } = phoneValidate(req.body);

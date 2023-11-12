@@ -1,4 +1,6 @@
 ## Build Docker
+
+In file docker-compose.yaml, change the volume of service: "node" to your folder's directory
 After starting Docker Desktop or Docker on your PC, run the belows commands: 
 ```
 $ npm install
