@@ -13,7 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     tourId: DataTypes.STRING,
     startAt: DataTypes.STRING,
     endAt: DataTypes.STRING,
-    remainTicket: DataTypes.INTEGER
+    remainTicket: DataTypes.INTEGER,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Tour_detail',

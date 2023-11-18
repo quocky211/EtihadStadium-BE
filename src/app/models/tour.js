@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   Tour.init({
     name: DataTypes.STRING,
     paramName: DataTypes.STRING,
+    image: DataTypes.STRING,
     price: DataTypes.DOUBLE,
     date: DataTypes.DATE,
     description: DataTypes.STRING,

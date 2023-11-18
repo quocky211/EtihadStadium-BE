@@ -18,6 +18,9 @@ module.exports = {
       paramName: {
         type: Sequelize.STRING,
       },
+      image: {
+        type: Sequelize.STRING,
+      },
       price: {
         type: Sequelize.DOUBLE
       },
