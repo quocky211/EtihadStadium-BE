@@ -33,17 +33,17 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    ports: 
-      - "8080:8080"
+    ports:
+      - "9090:9090"
     command: npm start
     environment:
-      PORT: 8080
+      PORT: 9090
       NODE_ENV: development
-    depends_on: 
+    depends_on:
       - db
       - pg-admin
     volumes:
-      - D:\Kỳ 7\Hệ thống thông tin địa lí 3 chiều\Project\EtihadStadium-BE:/usr/src
+      - D:\Workspace\School\Ky7\GIS\Project\backend-etihad:/usr/src
 
 volumes:
   postgres-data:
