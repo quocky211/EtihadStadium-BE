@@ -36,7 +36,7 @@ const selectTicketType = async (userId, tourDetailId, tickets) => {
     // sau 20p sẽ trả lại vé
     timeOut = setTimeout(
       restoreSlotTicketWhenExpire,
-      1000 * 60,
+      1000 * 60 * 20,
       userId,
       tourDetailId
     );
